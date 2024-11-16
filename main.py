@@ -34,19 +34,18 @@ def main():
     target_date = datetime(args.year, args.month, args.day)
 
     # Скачиваем с VX-underground архив со всеми файлами за день
-    """zip_path = download_file(target_date.strftime("%Y"), target_date.strftime("%m"), target_date.strftime("%d"))
+    zip_path = download_file(target_date.strftime("%Y"), target_date.strftime("%m"), target_date.strftime("%d"))
     if not zip_path:
         logger.error(f"Failed to download archive for {target_date.strftime('%Y.%m.%d')}")
-        return"""
+        return
 
-    
     #zipdata = os.path.join(os.getcwd(), "2024.11.01.7z") # для дебага
     
     # Распаковываем все файлы в ./tmp
-    """extracted_files = extract_files(zip_path)
+    extracted_files = extract_files(zip_path)
     if not extracted_files:
         logger.error(f"Failed to extract files for {target_date.strftime('%Y.%m.%d')}")
-        return"""
+        return
 
     # Сканируем файлы с помощью Yara
     process_samples( os.path.join(os.getcwd(), "tmp"), os.path.join(os.getcwd(), "rules"))
@@ -61,9 +60,9 @@ def main():
         logger.error(f"Failed to upload files to S3: {str(e)}")
 
     # Чистим данные
-    cleanup_extraction("2024.11.01.7z") # для дебага
+    #cleanup_extraction("2024.11.01.7z") # для дебага
 
-    #cleanup_extraction(zip_path)
+    cleanup_extraction(zip_path)
 
 if __name__ == "__main__":
     
