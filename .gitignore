@@ -1,0 +1,5 @@
+.venv
+.env
+vx_underground.log
+__pycache__
+tmp
