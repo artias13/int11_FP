@@ -52,7 +52,7 @@ def main():
     process_samples( os.path.join(os.getcwd(), "tmp"), os.path.join(os.getcwd(), "rules"))
     
     try:
-        S3_BUCKET_NAME = f"{target_date.strftime('%Y')}-{target_date.strftime('%m')}-{target_date.strftime('%d')}" + "_vx-underground"
+        S3_BUCKET_NAME = f"{target_date.strftime('%Y')}-{target_date.strftime('%m')}-{target_date.strftime('%d')}" + "-vx-underground"
         minio_client.create_bucket(S3_BUCKET_NAME)
         # Загружаем файлы в бакет
         for file in os.listdir(os.path.join(os.getcwd(), "tmp")):
