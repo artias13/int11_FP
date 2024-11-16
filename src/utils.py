@@ -15,13 +15,13 @@ def download_file(year: str, month: str, day: str) -> Union[str, None]:
     url = f"https://samples.vx-underground.org/Samples/VirusSign%20Collection/{year}.{month}/Virussign.{year}.{month}.{day}.7z"
     logger.info(f"Checking availability at URL: {url}")
     
-    # Perform a HEAD request to check if the resource exists
+    # Проверяем есть ли ресурс
     head_response = requests.head(url)
     
     if head_response.status_code == 200:
         logger.info("Resource found. Proceeding with download.")
         
-        # Now proceed with the actual download
+        # Теперь качаем
         response = requests.get(url, stream=True)
         total_size = int(response.headers.get('content-length', 0))
         
@@ -48,7 +48,7 @@ def extract_files(zip_path: Path) -> List[str]:
     logger.info("Starting extraction process")
     
     try:
-        # Get the size of the archive
+        # Получаем размер архива
         archive_size = os.path.getsize(zip_path)
         
         with tqdm(total=archive_size, desc="Extracting files") as pbar:
@@ -56,11 +56,11 @@ def extract_files(zip_path: Path) -> List[str]:
                 extraction_path = os.path.join(os.getcwd(), "tmp")
                 archive.extractall(extraction_path)
                 
-                # Calculate the total size of extracted files
+                # Вычисляем размер извлеченных файлов
                 extracted_size = sum(os.path.getsize(os.path.join(extraction_path, f)) 
                                     for f in archive.getnames())
                 
-                # Update progress bar with actual extracted size
+                # Бар не работает :(
                 pbar.update(extracted_size)
         
         logger.info(f"Successfully extracted {len(os.listdir(extraction_path))} files")
@@ -69,17 +69,17 @@ def extract_files(zip_path: Path) -> List[str]:
         logger.error(f"An error occurred during extraction: {str(e)}")
         return None
 
-# After extraction, remove the original archive
 def cleanup_extraction(zip_path: Path) -> NoReturn:
+    logger.info("Starting cleanup process")
     try:
-        # Remove the original archive
+        # Удаляем 7z
         if os.path.exists(zip_path):
             os.remove(zip_path)
             logger.info(f"Original archive {zip_path} has been removed")
         else:
             logger.warning(f"Archive {zip_path} not found. Cannot remove.")
 
-        # Remove the tmp folder
+        # Удаляем tmp
         tmp_folder = Path(os.path.join(os.getcwd(), "tmp"))
         if tmp_folder.is_dir():
             try:
