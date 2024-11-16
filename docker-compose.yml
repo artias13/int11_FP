@@ -79,5 +79,5 @@ services:
     volumes:
       - minio-data:/data
 
-  volumes:
-    minio-data:
+volumes:
+  minio-data:
