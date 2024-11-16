@@ -1,9 +1,11 @@
 import os
 from minio import Minio
 from minio.error import S3Error
+from src.logging_config import logger
 
 class MinioClient:
     def __init__(self, endpoint, access_key, secret_key):
+        
         self.client = Minio(
             endpoint=endpoint,
             access_key=access_key,
@@ -16,9 +18,9 @@ class MinioClient:
         found = self.client.bucket_exists(bucket_name)
         if not found:
             self.client.make_bucket(bucket_name)
-            print("Created bucket", bucket_name)
+            logger.info(f"Bucket {bucket_name} created")
         else:
-            print("Bucket", bucket_name, "already exists")
+            logger.info(f"Bucket {bucket_name} already exists")
     
     def upload_file(self, bucket_name, file_path):
         try:
@@ -27,9 +29,9 @@ class MinioClient:
                 object_name=file_path,
                 file_path=file_path,
             )
-            print(f"Файл {file_path} успешно загружен в S3")
+            logger.info(f"Файл {file_path} успешно загружен в S3")
         except S3Error as e:
-            print(f"Ошибка при загрузке файла {file_path}: {e}")
+            logger.error(f"Ошибка при загрузке файла {file_path}: {e}")
 
     def download_file(self, bucket_name, file_path, local_path):
         try:
