@@ -25,7 +25,11 @@ sudo python main.py --year 2024 --month 11 --day 01
 ### Запуск minio и Airflow DAG
 
 ```bash
-docker compose up -d
+echo -e "AIRFLOW_UID=$(id -u)\nAIRFLOW_GID=0" >> .env
+```
+
+```bash
+docker compose up airflow-init
 ```
 
 ## Результат выполнения main.py:
