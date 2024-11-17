@@ -32,6 +32,10 @@ echo -e "AIRFLOW_UID=$(id -u)\nAIRFLOW_GID=0" >> .env
 docker compose up airflow-init
 ```
 
+```bash
+docker compose up
+```
+
 ## Результат выполнения main.py:
 
 1. Архив будет загружен в / и разархивирован в папку /tmp
