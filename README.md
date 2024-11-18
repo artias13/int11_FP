@@ -25,7 +25,7 @@ sudo python main.py --year 2024 --month 11 --day 01
 ### Запуск minio и Airflow DAG
 
 ```bash
-echo -e "AIRFLOW_UID=$(id -u)\nAIRFLOW_GID=0" >> .env
+mkdir logs plugins && echo -e "AIRFLOW_UID=$(id -u)\nAIRFLOW_GID=0" >> .env
 ```
 
 ```bash
